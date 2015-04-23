@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Enhanced Nest Control</title>
+  <!--
+    Copyright (c) 2015 TimTheSinner All Rights Reserved.
+ 
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+ 
+      http://www.apache.org/licenses/LICENSE-2.0
+ 
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+  -->
+  <link rel="stylesheet" href="/fonts/LCDBOLD/font.css">
+  <!--<link rel="stylesheet" href="/stylesheets/all.css">-->
+  <script type="text/javascript" src="/javascript/d3.js"></script>
+  <script src="/bower_components/jquery/dist/jquery.js"></script>
+  <script src="/bower_components/jquery-cookie/jquery.cookie.js"></script>
+  <script type="text/javascript" src="/javascript/nest-thermostat.js"></script>
+  <script type="text/javascript" src="/javascript/nest-metrics.js"></script>
+
+  <script>
+      var thermostats = [],
+          userHash = null;
+      
+      function create(name, device, userHash)
+      {
+        var config = {
+          size: 336,
+          device: device,
+          minorTicks: 5
+        }
+                
+        thermostats[name] = new Thermostat(name, userHash).configure(config);
+        thermostats[name].render();
+      }
+          
+      function updateThermostats() {
+        if (! userHash) return;
+
+        $.getJSON(userHash + "/currentEnv", function(currentEnv) {
+          var $thermostats = $('#thermostats');
+          $.each(currentEnv.inside, function(i, device) {
+            var id = '_' + device.device;
+            if (thermostats[id]) {
+              thermostats[id].redraw(device);
+            } else {
+              $thermostats.append('<span id=' + id + '/>');
+              create(id, device, userHash);
+            }
+          });
+        });
+      }
+            
+      function initialize()
+      {
+        $('#submit').click(function() {
+          var email = $('#email').val(),
+              pass = $('#pass').val();
+          if (email && pass) {
+            $.ajax({type: "POST", contentType: "application/json", url: '/login', data: JSON.stringify({email: email, password: pass}),
+              success: function(resp) { userHash = resp.userId; localStorage.setItem('userId', userHash); $('#login').hide(); $('#thermostats').show(); updateThermostats(); }
+            });
+          }
+        })
+
+        if (localStorage.getItem('userId')) {
+          userHash = localStorage.getItem('userId');
+          $('#login').hide();
+          $('#thermostats').show();
+        } else {
+          $('#login').show();
+          $('#thermostats').hide();
+        }
+
+        (function() {
+          setInterval(updateThermostats, 15000);
+        })();
+        updateThermostats();
+
+        (function() {
+          if (userHash) {
+            $.getJSON(userHash + "/metrics", function(metrics) {
+              for (var device in metrics) {
+                var data = metrics[device],
+                    id =  '_' + device.device;
+
+                $('#metrics').append('<span id=' + id + '/>');
+                new Metrics(id, data);
+              }
+            });
+          }
+        })();
+      }
+    </script>
+</head>
+<body onload="initialize()">
+  <div id="login">
+    Email: <input type="email" id="email"><br>
+    Password: <input type="password" id="pass"><br>
+    <button id="submit">Login to nest</button>
+  </div>
+
+  <div  id="thermostats">
+    
+  </div>
+  <hr>
+  <div id="metrics">
+
+  </div>
+</body>
+</html>

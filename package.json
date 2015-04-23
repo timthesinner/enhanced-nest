@@ -1,0 +1,31 @@
+{
+  "author": "TimTheSinner",
+  "name": "Enhanced Nest Control",
+  "description": "Enhancements to the standard nest controls, add support for humidity adjustments and data mining",
+  "version": "0.0.0",
+  "main": "Gruntfile.js",
+  "license": "Apache 2.0",
+  "homepage": "https://github.com/timthesinner/enhanced-nest",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/timthesinner/enhanced-nest.git"
+  },
+  "bugs": {
+    "url": "https://github.com/timthesinner/enhanced-nest/issues"
+  },
+  "dependencies": {
+    "body-parser": "latest",
+    "cookie-parser": "latest",
+    "express": "latest",
+    "express-session": "latest",
+    "passport": "latest",
+    "passport-nest": "latest",
+	  "mongodb": "latest"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-wiredep": "latest",
+    "request": "latest",
+    "querystring": "latest"
+  }
+}
