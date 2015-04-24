@@ -1,6 +1,6 @@
 {
   "author": "TimTheSinner",
-  "name": "Enhanced Nest Control",
+  "name": "enhanced-nest-control",
   "description": "Enhancements to the standard nest controls, add support for humidity adjustments and data mining",
   "version": "0.0.0",
   "main": "Gruntfile.js",

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" style="height:100%; font:normal 10px/1.2 'Akkurat',Helvetica,sans-serif;">
 <head>
   <meta charset="UTF-8">
   <title>Enhanced Nest Control</title>
@@ -101,17 +101,34 @@
       }
     </script>
 </head>
-<body onload="initialize()">
-  <div id="login">
-    Email: <input type="email" id="email"><br>
-    Password: <input type="password" id="pass"><br>
-    <button id="submit">Login to nest</button>
+<body onload="initialize()" style="height:100%;">
+  <div id="login" style="background-color:#75d5f2; height:100%;">
+    <div style="height:33.6rem; width:48rem; margin:0 auto; padding-top:3.6rem">
+      <img src="/svg/house.svg" style="margin: 3rem 0; padding: 1rem; float: left;" />
+      <div>
+        <h1 style="color: white;">Welcome to Hive</h1>
+        <div>
+          <img src="/svg/user.svg" style="position: absolute; margin: 0.8rem 0; padding: 1rem; float: left;" />
+          <input type="email" id="email" style="border:3px solid #02b4e0; margin:0.8rem 0; padding:1rem 1.2rem 1rem 3rem; width:29rem">
+        </div>
+        <div>
+          <img src="/svg/key.svg" style="position: absolute; margin: 0.8rem 0; padding: 1rem; float: left;" />
+          <input type="password" id="pass" style="border:3px solid #02b4e0; margin:0.8rem 0; padding:1rem 1.2rem 1rem 3rem; width:29rem"><br>
+        </div>
+        <button id="submit" style="width:34rem; float:right; height: 4rem;background-color:#029fc8; border-radius:10rem;font-weight: bold;color: white;">Login to Nest</button>
+        <div style="clear:both;"></div>
+        <p style="color: white; background-color:#75d5f2; font-size:1.5rem; padding-right:10rem; float:right;">
+          Input your Nest credentials.
+        </p>
+        <div style="clear:both;"></div>
+      </div>
+    </div>
   </div>
 
   <div  id="thermostats">
     
   </div>
-  <hr>
+  
   <div id="metrics">
 
   </div>

@@ -15,6 +15,7 @@
  */
 module.exports = function( grunt ) {
   'use strict';
+  var port = 1337;
 
   grunt.loadNpmTasks('grunt-wiredep');
 
@@ -31,11 +32,11 @@ module.exports = function( grunt ) {
   });
 
   /**
-    Start the web server on port 8080
+    Start the web server on port
   */
   grunt.registerTask('server', 'Start express server', function() {
-    require('./server.js').listen(8080, function () {
-      grunt.log.writeln('Web server running at http://localhost:8080.');
+    require('./server.js').listen(port, function () {
+      grunt.log.writeln('Web server running at http://localhost:' + port);
     }).on('close', this.async());
   });
 
